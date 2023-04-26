@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp">
+
+    <com.example.uploadpic.SquareImageView
+        android:id="@+id/img_file"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"/>
+
+<!--    <com.howfor.mediademo.CenterImage
+        android:id="@+id/img_file"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cross"/>-->
+
+    <TextView
+        android:id="@+id/tv_point"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        android:focusable="true"
+        android:layout_alignRight="@id/img_file"
+        android:layout_alignTop="@id/img_file"
+        android:layout_margin="5dp"/>
+
+
+<!--    <CheckBox
+        android:id="@+id/cb_select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@id/img_file"
+        android:layout_alignTop="@id/img_file"
+        android:layout_marginRight="-17dp"
+        android:layout_marginTop="-10dp"/>-->
+
+</RelativeLayout>
