@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public enum ServiceCreator {
     INSTANCE;
 
-    private final String BASE_URL = "http://192.168.10.214:80/v1/";
+    private final String BASE_URL = "http://192.168.8.154/v1/";
 
     private final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)

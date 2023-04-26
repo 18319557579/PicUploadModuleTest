@@ -34,6 +34,9 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class PhotoActivity extends AppCompatActivity {
 
@@ -78,6 +81,42 @@ public class PhotoActivity extends AppCompatActivity {
                 File file = new File(filePath);
                 RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
                 MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+                service.uploadPicture(body).enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        Log.d("Daisy", "文件上传完成");
+                        try {
+                            Log.d("Daisy", "返回的内容：" + response.body().string());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Toast.makeText(PhotoActivity.this, "文件上传成功", Toast.LENGTH_SHORT).show();
+                        myHandler.sendEmptyMessage(MyHandler.FINISH_ACTIVITY);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d("Daisy", "文件上传失败" + t);
+                        myHandler.sendEmptyMessage(MyHandler.FINISH_ACTIVITY);
+                    }
+                });
+            }
+        });
+
+        findViewById(R.id.btn_upload_rx).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String filePath = photoAdapter.getUri();
+                if (filePath == null) {
+                    Toast.makeText(PhotoActivity.this, "你还未选择图片", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                UploadPictureService service = ServiceCreator.INSTANCE.create(UploadPictureService.class);
+                File file = new File(filePath);
+                RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+                MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+
                 service.uploadPictureRx(body).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<ResponseBody>() {
                     @Override
                     public void onSubscribe(Disposable d) {
